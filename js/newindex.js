@@ -5,7 +5,7 @@ var ctx = canvas.getContext('2d');
 var img = new Image();
 img.crossOrigin="anonymous";
 
-window.addEventListener('load', DrawPlaceholder(img,ctx,"#000",'111.jpg',200,340));
+window.addEventListener('load', DrawPlaceholder(img,ctx,"#7A7A7A",'111.jpg',550,1320));
 
 
 
@@ -26,7 +26,7 @@ canv.drawImage(photo,0,0);
 function DrawText(canv,fillcolor) {
     canv.fillStyle = fillcolor; 
     canv.textBaseline = 'middle';
-    canv.font = " 20px Aktiv Grotesk Arabic ";
+    canv.font = " 100px Aktiv Grotesk Arabic ";
 }
 function DynamicText(canv,photo,clr,x,y) {
   document.getElementById('name').addEventListener('keyup', function() {

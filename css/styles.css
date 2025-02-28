@@ -34,6 +34,14 @@ Colors:
 /**************************/
 /*     General Styles     */
 /**************************/
+@font-face {
+  font-family: 'Aktiv Grotesk Arabic';
+  src: url('path-to-your-font/AktivGroteskArabic.woff2') format('woff2'),
+       url('path-to-your-font/AktivGroteskArabic.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body,
 html {
     width: 100%;

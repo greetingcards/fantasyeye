@@ -26,7 +26,7 @@ canv.drawImage(photo,0,0);
 function DrawText(canv,fillcolor) {
     canv.fillStyle = fillcolor; 
     canv.textBaseline = 'middle';
-    canv.font = " 100px Aktiv Grotesk Arabic ";
+    canv.font = " 85px Aktiv Grotesk Arabic ";
 }
 function DynamicText(canv,photo,clr,x,y) {
   document.getElementById('name').addEventListener('keyup', function() {

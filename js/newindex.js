@@ -5,7 +5,7 @@ var ctx = canvas.getContext('2d');
 var img = new Image();
 img.crossOrigin="anonymous";
 
-window.addEventListener('load', DrawPlaceholder(img,ctx,"#FFFFFF",'111.jpg',500,1480));
+window.addEventListener('load', DrawPlaceholder(img,ctx,"#FFFFFF",'111.jpg',500,1450));
 
 
 
@@ -26,7 +26,7 @@ canv.drawImage(photo,0,0);
 function DrawText(canv,fillcolor) {
     canv.fillStyle = fillcolor; 
     canv.textBaseline = 'middle';
-    canv.font = " 60px 'Scheherazade New', serif";
+    canv.font = " 50px 'Tajawal', sans-serif ";
 }
 function DynamicText(canv,photo,clr,x,y) {
   document.getElementById('name').addEventListener('keyup', function() {

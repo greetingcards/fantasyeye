@@ -26,7 +26,7 @@ canv.drawImage(photo,0,0);
 function DrawText(canv,fillcolor) {
     canv.fillStyle = fillcolor; 
     canv.textBaseline = 'middle';
-    canv.font = " 70px 'Scheherazade New', serif";
+    canv.font = " 60px 'Scheherazade New', serif";
 }
 function DynamicText(canv,photo,clr,x,y) {
   document.getElementById('name').addEventListener('keyup', function() {

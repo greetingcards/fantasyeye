@@ -5,7 +5,7 @@ var ctx = canvas.getContext('2d');
 var img = new Image();
 img.crossOrigin="anonymous";
 
-window.addEventListener('load', DrawPlaceholder(img,ctx,"#FFFFFF",'111.jpg',500,1480));
+window.addEventListener('load', DrawPlaceholder(img,ctx,"#FFFFFF",'111.jpg',540,1480));
 
 
 

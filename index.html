@@ -1,135 +1,163 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Fantasy Eye - Ramadan Name Generator</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fantasy Eye - Ramadan Generator</title>
 
-  <!-- Arabic-friendly font (optional) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Arabic Friendly Font -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    body { font-family: Cairo, system-ui, Arial; margin: 0; background:#f6f6f6; }
-    .wrap { max-width: 980px; margin: 24px auto; padding: 16px; }
-    .card { background: white; border-radius: 16px; padding: 16px; box-shadow: 0 6px 24px rgba(0,0,0,.08); }
-    .row { display: grid; grid-template-columns: 1fr; gap: 12px; }
-    @media (min-width: 900px) { .row { grid-template-columns: 360px 1fr; align-items: start; } }
-    input, button { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid #ddd; font-size: 16px; }
-    button { border: 0; cursor: pointer; background: #b08a55; color: white; font-weight: 700; }
-    button:hover { filter: brightness(.95); }
-    .hint { font-size: 13px; color: #666; line-height: 1.5; margin-top: 8px;}
-    canvas { width: 100%; height: auto; border-radius: 12px; background: #fff; }
-    .btns { display:flex; gap:10px; }
-    .btns button { flex:1; }
-    .secondary { background:#333; }
-  </style>
+<style>
+body{
+  margin:0;
+  font-family:'Cairo', sans-serif;
+  background:#f5f5f5;
+}
+
+.container{
+  max-width:1000px;
+  margin:30px auto;
+  padding:20px;
+  background:#ffffff;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+h2{
+  margin-bottom:20px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  font-size:16px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  margin-bottom:10px;
+}
+
+button{
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  margin-right:10px;
+}
+
+.generate{
+  background:#b08a55;
+  color:white;
+}
+
+.download{
+  background:#333;
+  color:white;
+}
+
+canvas{
+  width:100%;
+  margin-top:20px;
+  border-radius:12px;
+}
+</style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="card">
-      <div class="row">
-        <div>
-          <h2 style="margin:0 0 12px 0;">Ramadan Post Generator</h2>
 
-          <label>Employee name (Arabic or English)</label>
-          <input id="name" placeholder="اكتب اسمك هنا / Write your name" />
+<div class="container">
+  <h2>Ramadan Post Generator - Fantasy Eye</h2>
 
-          <div class="btns" style="margin-top:12px;">
-            <button id="generate">Generate</button>
-            <button class="secondary" id="download">Download</button>
-          </div>
+  <input type="text" id="name" placeholder="اكتب اسمك هنا / Write your name">
 
-          <div class="hint">
-            <b>Setup:</b> Keep your design image in the same folder and name it <code>ramadan.png</code>.<br/>
-            <b>Note:</b> If the name position is slightly off, adjust the X/Y values in the code (I marked them clearly).
-          </div>
-        </div>
+  <button class="generate" onclick="draw()">Generate</button>
+  <button class="download" onclick="downloadImage()">Download</button>
 
-        <div>
-          <canvas id="c"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
+  <canvas id="canvas"></canvas>
+</div>
 
-  <script>
-    // ====== CONFIG (adjust these if needed) ======
-    const IMAGE_SRC = "ramadan.png";
 
-    // Position of the name (in pixels on the ORIGINAL image size)
-    // These are a starting point — adjust until it sits exactly on the red line.
-    let NAME_X = 540;   // left -> right
-    let NAME_Y = 1475;  // top -> down
+<script>
+// ======================= CONFIG =======================
 
-    // Text style
-    const FONT_SIZE = 52;               // px
-    const FONT_FAMILY = "Cairo";        // should match loaded font
-    const FONT_WEIGHT = 600;            // 400/600/700
-    const TEXT_COLOR = "#2b2b2b";        // dark gray/black
-    const TEXT_ALIGN = "center";        // "left" | "center" | "right"
-    // ============================================
+const IMAGE_SRC = "ramadan.png";   // your design image name
 
-    const canvas = document.getElementById("c");
-    const ctx = canvas.getContext("2d");
-    const nameInput = document.getElementById("name");
-    const btnGenerate = document.getElementById("generate");
-    const btnDownload = document.getElementById("download");
+// Adjust these numbers to perfectly match the red line
+let NAME_X = 540;   // move left/right
+let NAME_Y = 1475;  // move up/down
 
-    const img = new Image();
-    img.crossOrigin = "anonymous"; // helps if hosted on same domain / proper headers
-    img.src = IMAGE_SRC;
+const FONT_SIZE = 52;
+const FONT_WEIGHT = 600;
+const FONT_FAMILY = "Cairo";
+const TEXT_COLOR = "#2b2b2b";
 
-    function draw() {
-      // Set canvas to match original image pixel size (important for quality)
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
+// ======================================================
 
-      // Draw background image
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
 
-      // Draw name
-      const name = (nameInput.value || "").trim();
-      if (name) {
-        ctx.fillStyle = TEXT_COLOR;
-        ctx.textAlign = TEXT_ALIGN;
-        ctx.textBaseline = "middle";
-        ctx.direction = "rtl"; // better for Arabic (still ok for English)
-        ctx.font = `${FONT_WEIGHT} ${FONT_SIZE}px ${FONT_FAMILY}`;
+// Get elements
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const nameInput = document.getElementById("name");
 
-        // Optional: slight shadow for readability (comment out if not needed)
-        ctx.shadowColor = "rgba(0,0,0,0.12)";
-        ctx.shadowBlur = 2;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 1;
+const img = new Image();
+img.src = IMAGE_SRC;
 
-        ctx.fillText(name, NAME_X, NAME_Y);
 
-        // Reset shadow
-        ctx.shadowColor = "transparent";
-        ctx.shadowBlur = 0;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 0;
-      }
-    }
+// When image loads
+img.onload = function(){
+  canvas.width = img.naturalWidth;
+  canvas.height = img.naturalHeight;
+  draw();
+};
 
-    function downloadPNG() {
-      const name = (nameInput.value || "name").trim().replace(/[^\w\u0600-\u06FF\- ]+/g, "");
-      const a = document.createElement("a");
-      a.download = `Ramadan_${name || "Post"}.png`;
-      a.href = canvas.toDataURL("image/png");
-      a.click();
-    }
 
-    img.onload = () => draw();
-    img.onerror = () => alert("Image not found. Make sure ramadan.png is in the same folder as index.html");
+// Draw function
+function draw(){
 
-    btnGenerate.addEventListener("click", draw);
-    nameInput.addEventListener("input", draw);
-    btnDownload.addEventListener("click", () => { draw(); downloadPNG(); });
-  </script>
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // Draw background
+  ctx.drawImage(img,0,0);
+
+  const name = nameInput.value.trim();
+
+  if(name !== ""){
+
+    ctx.fillStyle = TEXT_COLOR;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.direction = "rtl";
+    ctx.font = FONT_WEIGHT + " " + FONT_SIZE + "px " + FONT_FAMILY;
+
+    // Small shadow for better readability
+    ctx.shadowColor = "rgba(0,0,0,0.15)";
+    ctx.shadowBlur = 2;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 1;
+
+    ctx.fillText(name, NAME_X, NAME_Y);
+
+    // Reset shadow
+    ctx.shadowColor = "transparent";
+  }
+}
+
+
+// Download function
+function downloadImage(){
+
+  draw();
+
+  const cleanName = nameInput.value.trim() || "Post";
+
+  const link = document.createElement("a");
+  link.download = "Ramadan_" + cleanName + ".png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+}
+</script>
+
 </body>
 </html>

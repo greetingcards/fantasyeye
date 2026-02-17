@@ -1,156 +1,305 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>بطاقة تهنئة - عين الخيال الإعلامية</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>بطاقة تهنئة - عين الخيال الإعلامية</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
-<style>
-body{
-  margin:0;
-  font-family:Tajawal,Arial,sans-serif;
-  background:#f4efe8;
-  color:#1a1a1a;
-}
-
-.wrap{
-  max-width:1000px;
-  margin:auto;
-  padding:20px;
-}
-
-h3{
-  margin-bottom:8px;
-}
-
-.box{
-  background:#fff;
-  border:1px solid #e6dfd6;
-  border-radius:16px;
-  padding:16px;
-  display:grid;
-  grid-template-columns:320px 1fr;
-  gap:16px;
-}
-
-label{
-  display:block;
-  margin:10px 0 6px;
-  font-weight:700;
-}
-
-input{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:1px solid #e1d9cf;
-  font-size:16px;
-  background:#faf8f5;
-}
-
-button{
-  width:100%;
-  margin-top:12px;
-  padding:12px;
-  border-radius:12px;
-  border:0;
-  cursor:pointer;
-  font-weight:700;
-  font-size:16px;
-  background:#AD8252;
-  color:#111;
-}
-
-.preview{
-  display:grid;
-  justify-items:center;
-  gap:12px;
-}
-
-canvas{
-  width:100%;
-  max-width:480px;
-  border-radius:16px;
-  border:1px solid #e6dfd6;
-  background:#fff;
-}
-
-.controls{
-  display:grid;
-  gap:6px;
-  justify-items:center;
-}
-
-.arrow-row{
-  display:flex;
-  gap:8px;
-}
-
-.arrow-btn{
-  background:#1f5f99;
-  color:#fff;
-  width:45px;
-  height:45px;
-  border-radius:10px;
-  border:none;
-  cursor:pointer;
-  font-size:18px;
-}
-
-.reset-btn{
-  background:#AD8252;
-  color:#111;
-  padding:8px 16px;
-  border-radius:10px;
-  border:none;
-  cursor:pointer;
-  font-size:14px;
-}
-
-@media(max-width:900px){
-  .box{grid-template-columns:1fr;}
-}
-</style>
+  <style>
+    :root{
+      --gold:#AD8252;
+      --dark:#2b2b2b;
+      --bg:#f4efe8;
+      --card:#ffffff;
+      --border:#e6dfd6;
+    }
+    body{
+      margin:0;
+      font-family:Tajawal, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--dark);
+    }
+    .wrap{
+      max-width:1000px;
+      margin:0 auto;
+      padding:18px;
+    }
+    h3{
+      margin:6px 0 10px;
+      font-size:24px;
+      color:var(--dark);
+    }
+    p{
+      margin:0 0 14px;
+      color:#444;
+    }
+    .box{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px;
+      display:grid;
+      grid-template-columns:320px 1fr;
+      gap:16px;
+      align-items:start;
+    }
+    label{
+      display:block;
+      margin:10px 0 6px;
+      font-weight:700;
+      color:var(--dark);
+    }
+    input{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid #e1d9cf;
+      outline:none;
+      font-size:16px;
+      background:#faf8f5;
+      color:var(--dark);
+    }
+    button{
+      width:100%;
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:12px;
+      border:0;
+      cursor:pointer;
+      font-weight:700;
+      font-size:16px;
+      background:var(--gold);
+      color:#111;
+    }
+    .note{
+      margin-top:10px;
+      font-size:12px;
+      color:#666;
+      line-height:1.6;
+    }
+    .preview{
+      display:grid;
+      justify-items:center;
+      gap:12px;
+    }
+    canvas{
+      width:100%;
+      max-width:480px;
+      height:auto;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:#fff;
+    }
+    /* Arrow Controls (Gold + Dark Gray) */
+    .controls{
+      margin-top:10px;
+      display:grid;
+      gap:6px;
+      justify-items:center;
+      width:100%;
+      max-width:480px;
+      padding:10px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:#faf8f5;
+    }
+    .arrow-row{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+    }
+    .arrow-btn{
+      background:var(--dark);
+      color:#fff;
+      width:48px;
+      height:48px;
+      border-radius:12px;
+      border:none;
+      cursor:pointer;
+      font-size:18px;
+      font-weight:700;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .reset-btn{
+      background:var(--gold);
+      color:#111;
+      width:auto;
+      padding:10px 16px;
+      border-radius:12px;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+      font-size:14px;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    @media (max-width: 900px){
+      .box{ grid-template-columns:1fr; }
+      canvas{ max-width:100%; }
+      .controls{ max-width:100%; }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="wrap">
+    <h3>موظفي عين الخيال الإعلامية ✨ صمّم بطاقتك الخاصة</h3>
+    <p>اكتب اسمك، ثم عدّل مكانه بالأسهم إذا احتجت، وبعدها حمّل البطاقة.</p>
 
-<div class="wrap">
+    <div class="box">
+      <div>
+        <label for="name">الاسم</label>
+        <input id="name" type="text" placeholder="اكتب اسمك هنا" autocomplete="name" />
 
-<h3>موظفي عين الخيال الإعلامية 💙 صمّم بطاقتك الخاصة</h3>
-<p>اكتب اسمك ثم حمّل بطاقتك مباشرة.</p>
+        <button type="button" id="downloadBtn">تنزيل البطاقة</button>
 
-<div class="box">
+        <div class="note">
+          📌 الاسم سيظهر على الخط أسفل عبارة التهنئة. يمكنك تحريك الاسم بالأسهم.
+        </div>
+      </div>
 
-<div>
-<label for="name">الاسم</label>
-<input id="name" type="text" placeholder="اكتب اسمك هنا">
+      <div class="preview">
+        <!-- Canvas size MUST match your image size -->
+        <canvas id="imageCanvas" width="2160" height="3840"></canvas>
 
-<button type="button" id="downloadBtn">تنزيل البطاقة</button>
-</div>
+        <!-- Arrows + Reset -->
+        <div class="controls">
+          <div>
+            <button type="button" class="arrow-btn" id="upBtn">↑</button>
+          </div>
+          <div class="arrow-row">
+            <button type="button" class="arrow-btn" id="leftBtn">←</button>
+            <button type="button" class="arrow-btn" id="rightBtn">→</button>
+          </div>
+          <div>
+            <button type="button" class="arrow-btn" id="downBtn">↓</button>
+          </div>
 
-<div class="preview">
+          <button type="button" class="reset-btn" id="resetBtn">إرجاع الوضع الافتراضي</button>
+        </div>
 
-<canvas id="imageCanvas" width="2016" height="3840"></canvas>
-
-<div class="controls">
-  <div><button type="button" class="arrow-btn" id="upBtn">↑</button></div>
-  <div class="arrow-row">
-    <button type="button" class="arrow-btn" id="leftBtn">←</button>
-    <button type="button" class="arrow-btn" id="rightBtn">→</button>
+        <!-- Hidden download link -->
+        <a id="downloadLink" download="Card.png" href="#" style="display:none;"></a>
+      </div>
+    </div>
   </div>
-  <div><button type="button" class="arrow-btn" id="downBtn">↓</button></div>
-  <button type="button" class="reset-btn" id="resetBtn">إرجاع الوضع الافتراضي</button>
-</div>
 
-<a id="downloadLink" download="Card.png" href="#" style="display:none;"></a>
+  <script>
+    (() => {
+      const canvas = document.getElementById("imageCanvas");
+      const ctx = canvas.getContext("2d");
+      const nameInput = document.getElementById("name");
+      const downloadBtn = document.getElementById("downloadBtn");
+      const downloadLink = document.getElementById("downloadLink");
 
-</div>
-</div>
-</div>
+      const upBtn = document.getElementById("upBtn");
+      const downBtn = document.getElementById("downBtn");
+      const leftBtn = document.getElementById("leftBtn");
+      const rightBtn = document.getElementById("rightBtn");
+      const resetBtn = document.getElementById("resetBtn");
 
-<script src="app.js"></script>
+      if (!canvas || !ctx || !nameInput || !downloadBtn || !downloadLink) return;
+
+      // Keep page Arabic RTL
+      document.documentElement.lang = "ar";
+      document.documentElement.dir = "rtl";
+
+      // Image size
+      canvas.width = 2160;
+      canvas.height = 3840;
+
+      // ✅ Default name position on the red line (based on your card)
+      const DEFAULT_X = 1080;  // center of 2160
+      const DEFAULT_Y = 2166;  // on the red line (adjust with arrows if needed)
+
+      let nameX = DEFAULT_X;
+      let nameY = DEFAULT_Y;
+
+      const STEP = 10;
+
+      // ✅ Company colors for name: Dark Gray (and you can switch to gold if desired)
+      const NAME_COLOR = "#2b2b2b";  // dark gray
+      const FONT_FAMILY = "Tajawal, Arial, sans-serif";
+      const FONT_WEIGHT = "700";
+
+      // Background image (put your card image here)
+      // ✅ Place your file at: images/card.png
+      const bgImg = new Image();
+      bgImg.crossOrigin = "anonymous";
+      bgImg.src = "images/card.png";
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (bgImg.complete && bgImg.naturalWidth) {
+          ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+        }
+
+        const name = (nameInput.value || "").trim();
+        if (!name) return;
+
+        // base font size (auto-fit for long names)
+        let fontSize = 92;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = NAME_COLOR;
+        ctx.font = `${FONT_WEIGHT} ${fontSize}px ${FONT_FAMILY}`;
+
+        const maxWidth = canvas.width * 0.75;
+        while (ctx.measureText(name).width > maxWidth && fontSize > 55) {
+          fontSize -= 2;
+          ctx.font = `${FONT_WEIGHT} ${fontSize}px ${FONT_FAMILY}`;
+        }
+
+        ctx.fillText(name, nameX, nameY);
+      }
+
+      function move(dx, dy) {
+        nameX += dx;
+        nameY += dy;
+        draw();
+      }
+
+      function download() {
+        draw();
+        const dataUrl = canvas.toDataURL("image/png");
+
+        const safeName = (nameInput.value || "name")
+          .trim()
+          .replace(/[^\w\u0600-\u06FF\u00C0-\u017F\s-]/g, "")
+          .replace(/\s+/g, "_");
+
+        downloadLink.href = dataUrl;
+        downloadLink.download = `FantasyEye_${safeName}.png`;
+        downloadLink.click();
+      }
+
+      // Mobile-safe binding
+      function bindPress(el, fn) {
+        if (!el) return;
+        el.addEventListener("click", (e) => { e.preventDefault(); fn(); }, { passive: false });
+        el.addEventListener("touchstart", (e) => { e.preventDefault(); fn(); }, { passive: false });
+      }
+
+      bindPress(upBtn, () => move(0, -STEP));
+      bindPress(downBtn, () => move(0, STEP));
+      bindPress(leftBtn, () => move(-STEP, 0));
+      bindPress(rightBtn, () => move(STEP, 0));
+
+      bindPress(resetBtn, () => {
+        nameX = DEFAULT_X;
+        nameY = DEFAULT_Y;
+        draw();
+      });
+
+      nameInput.addEventListener("input", draw);
+      downloadBtn.addEventListener("click", download);
+
+      bgImg.onload = draw;
+    })();
+  </script>
 </body>
 </html>

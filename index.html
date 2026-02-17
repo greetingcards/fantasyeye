@@ -1,146 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Fantasy Eye - Ramadan Generator</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>بطاقة تهنئة - عين الخيال الإعلامية</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-  body { margin:0; font-family:'Cairo', sans-serif; background:#f5f5f5; }
-  .container{
-    max-width: 1000px; margin: 30px auto; padding: 20px;
-    background: #fff; border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  }
-  h2{ margin: 0 0 14px; }
-  input{
-    width:100%; padding:12px; font-size:16px;
-    border-radius:12px; border:1px solid #ddd; margin-bottom:10px;
-  }
-  button{
-    padding:12px 14px; border:none; border-radius:12px;
-    font-size:16px; font-weight:600; cursor:pointer;
-    background:#333; color:#fff;
-  }
-  canvas{ width:100%; margin-top:18px; border-radius:12px; background:#fff; }
+body{
+  margin:0;
+  font-family:Tajawal,Arial,sans-serif;
+  background:#f4efe8;
+  color:#1a1a1a;
+}
+
+.wrap{
+  max-width:1000px;
+  margin:auto;
+  padding:20px;
+}
+
+h3{
+  margin-bottom:8px;
+}
+
+.box{
+  background:#fff;
+  border:1px solid #e6dfd6;
+  border-radius:16px;
+  padding:16px;
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:16px;
+}
+
+label{
+  display:block;
+  margin:10px 0 6px;
+  font-weight:700;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #e1d9cf;
+  font-size:16px;
+  background:#faf8f5;
+}
+
+button{
+  width:100%;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  border:0;
+  cursor:pointer;
+  font-weight:700;
+  font-size:16px;
+  background:#AD8252;
+  color:#111;
+}
+
+.preview{
+  display:grid;
+  justify-items:center;
+  gap:12px;
+}
+
+canvas{
+  width:100%;
+  max-width:480px;
+  border-radius:16px;
+  border:1px solid #e6dfd6;
+  background:#fff;
+}
+
+.controls{
+  display:grid;
+  gap:6px;
+  justify-items:center;
+}
+
+.arrow-row{
+  display:flex;
+  gap:8px;
+}
+
+.arrow-btn{
+  background:#1f5f99;
+  color:#fff;
+  width:45px;
+  height:45px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  font-size:18px;
+}
+
+.reset-btn{
+  background:#AD8252;
+  color:#111;
+  padding:8px 16px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  font-size:14px;
+}
+
+@media(max-width:900px){
+  .box{grid-template-columns:1fr;}
+}
 </style>
 </head>
 
 <body>
-<div class="container">
-  <h2>Ramadan Post Generator - Fantasy Eye</h2>
 
-  <input id="name" type="text" placeholder="اكتب اسمك هنا / Write your name" />
+<div class="wrap">
 
-  <button id="downloadBtn">Download</button>
+<h3>موظفي عين الخيال الإعلامية 💙 صمّم بطاقتك الخاصة</h3>
+<p>اكتب اسمك ثم حمّل بطاقتك مباشرة.</p>
 
-  <canvas id="canvas"></canvas>
+<div class="box">
+
+<div>
+<label for="name">الاسم</label>
+<input id="name" type="text" placeholder="اكتب اسمك هنا">
+
+<button type="button" id="downloadBtn">تنزيل البطاقة</button>
 </div>
 
-<script>
-  // ======================= CONFIG =======================
-  const IMAGE_SRC = "ramadan.png"; // put your 2160x3840 image with this name in same folder
+<div class="preview">
 
-  // ✅ Exact position for 2160x3840 (center of your red line)
-  const NAME_X = 1084;
-  const NAME_Y = 2165;
+<canvas id="imageCanvas" width="2016" height="3840"></canvas>
 
-  const FONT_FAMILY = "Cairo";
-  const FONT_WEIGHT = 600;
-  const TEXT_COLOR = "#2b2b2b";
+<div class="controls">
+  <div><button type="button" class="arrow-btn" id="upBtn">↑</button></div>
+  <div class="arrow-row">
+    <button type="button" class="arrow-btn" id="leftBtn">←</button>
+    <button type="button" class="arrow-btn" id="rightBtn">→</button>
+  </div>
+  <div><button type="button" class="arrow-btn" id="downBtn">↓</button></div>
+  <button type="button" class="reset-btn" id="resetBtn">إرجاع الوضع الافتراضي</button>
+</div>
 
-  // Name line width (approx) to keep text inside the line nicely
-  // If you want wider/narrower, change this.
-  const MAX_TEXT_WIDTH = 1200; // px on the 2160x3840 canvas
+<a id="downloadLink" download="Card.png" href="#" style="display:none;"></a>
 
-  const START_FONT_SIZE = 85;  // start large
-  const MIN_FONT_SIZE = 66;    // don't go below this
-  // ======================================================
+</div>
+</div>
+</div>
 
-  const canvas = document.getElementById("canvas");
-  const ctx = canvas.getContext("2d");
-  const nameInput = document.getElementById("name");
-  const downloadBtn = document.getElementById("downloadBtn");
-
-  const img = new Image();
-  img.src = IMAGE_SRC;
-
-  img.onload = () => {
-    // IMPORTANT: keep canvas equal to original image pixel size for high quality
-    canvas.width = img.naturalWidth;
-    canvas.height = img.naturalHeight;
-    draw();
-  };
-
-  img.onerror = () => {
-    alert("Image not found. Make sure ramadan.png is in the same folder as index.html");
-  };
-
-  function isArabic(text) {
-    return /[\u0600-\u06FF]/.test(text);
-  }
-
-  function fitFontSize(text) {
-    let size = START_FONT_SIZE;
-    while (size >= MIN_FONT_SIZE) {
-      ctx.font = `${FONT_WEIGHT} ${size}px ${FONT_FAMILY}`;
-      const w = ctx.measureText(text).width;
-      if (w <= MAX_TEXT_WIDTH) return size;
-      size -= 2;
-    }
-    return MIN_FONT_SIZE;
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(img, 0, 0);
-
-    const name = (nameInput.value || "").trim();
-    if (!name) return;
-
-    // Auto RTL/LTR
-    ctx.direction = isArabic(name) ? "rtl" : "ltr";
-
-    // Styling
-    ctx.fillStyle = TEXT_COLOR;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-
-    // Auto fit font size
-    const fontSize = fitFontSize(name);
-    ctx.font = `${FONT_WEIGHT} ${fontSize}px ${FONT_FAMILY}`;
-
-    // Optional soft shadow for readability
-    ctx.shadowColor = "rgba(0,0,0,0.12)";
-    ctx.shadowBlur = 2;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 1;
-
-    // Draw name on the red line
-    ctx.fillText(name, NAME_X, NAME_Y);
-
-    // Reset shadow
-    ctx.shadowColor = "transparent";
-    ctx.shadowBlur = 0;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
-  }
-
-  // ✅ Live preview (no Generate button)
-  nameInput.addEventListener("input", draw);
-
-  // Download
-  downloadBtn.addEventListener("click", () => {
-    draw();
-    const cleanName = (nameInput.value.trim() || "Post").replace(/[^\w\u0600-\u06FF\- ]+/g, "");
-    const a = document.createElement("a");
-    a.download = `Ramadan_${cleanName}.png`;
-    a.href = canvas.toDataURL("image/png");
-    a.click();
-  });
-</script>
+<script src="app.js"></script>
 </body>
 </html>
-

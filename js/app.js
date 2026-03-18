@@ -26,7 +26,7 @@ const STEP = 10;
 const bgImg = new Image();
 bgImg.src = "images/card.png"; // ضع صورة بطاقة عين الخيال هنا
 
-const NAME_COLOR = "#FFFFFF";
+const NAME_COLOR = "#0F2D52";
 const FONT_FAMILY = "Tajawal, Arial, sans-serif";
 
 function draw() {

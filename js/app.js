@@ -16,7 +16,7 @@ canvas.width = 2016;
 canvas.height = 3840;
 
 const DEFAULT_X = 1008;
-const DEFAULT_Y = 2150;
+const DEFAULT_Y = 2950;
 
 let nameX = DEFAULT_X;
 let nameY = DEFAULT_Y;
